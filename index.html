@@ -95,7 +95,8 @@
 
         <label class="field">
           <span>Total time (minutes)</span>
-          <input id="totalTime" name="totalTime" type="number" min="0" max="1440" step="1" inputmode="numeric" placeholder="45">
+          <input id="totalTime" name="totalTime" type="number" min="0" max="1440" step="1" inputmode="numeric" placeholder="45" aria-describedby="totalTimeError">
+          <small class="field-error" id="totalTimeError"></small>
         </label>
 
         <label class="field">
