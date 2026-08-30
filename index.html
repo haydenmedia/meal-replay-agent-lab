@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meal Replay</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Local-first cooking log</p>
+        <h1>Meal Replay</h1>
+        <p class="intro">Remember what worked, what did not, and whether dinner deserves a rematch.</p>
+      </div>
+      <button id="newMealButton" class="primary-button" type="button">Add meal</button>
+    </header>
+
+    <section class="controls" aria-label="Meal filters">
+      <label class="control-field search-field">
+        <span>Search</span>
+        <input id="searchInput" type="search" placeholder="Meal name, notes, what worked…" autocomplete="off">
+      </label>
+
+      <label class="control-field">
+        <span>Make again</span>
+        <select id="makeAgainFilter">
+          <option value="all">All meals</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+      </label>
+
+      <label class="control-field">
+        <span>Minimum rating</span>
+        <select id="ratingFilter">
+          <option value="0">Any rating</option>
+          <option value="3">3+</option>
+          <option value="4">4+</option>
+          <option value="5">5 only</option>
+        </select>
+      </label>
+    </section>
+
+    <section aria-labelledby="mealListHeading">
+      <div class="section-heading">
+        <h2 id="mealListHeading">Meals</h2>
+        <span id="resultCount" class="result-count" aria-live="polite"></span>
+      </div>
+      <div id="mealList" class="meal-list"></div>
+      <div id="emptyState" class="empty-state" hidden>
+        <h3>No meals here yet</h3>
+        <p id="emptyStateMessage">Add your first meal replay to start building a useful cooking history.</p>
+        <button id="emptyAddButton" class="secondary-button" type="button">Add a meal</button>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="mealDialog" class="meal-dialog">
+    <form id="mealForm" method="dialog" novalidate>
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">Meal details</p>
+          <h2 id="dialogTitle">Add meal</h2>
+        </div>
+        <button id="closeDialogButton" class="icon-button" type="button" aria-label="Close">×</button>
+      </div>
+
+      <input id="mealId" type="hidden">
+
+      <div class="form-grid">
+        <label class="field full-width">
+          <span>Meal name <strong aria-hidden="true">*</strong></span>
+          <input id="mealName" name="mealName" type="text" maxlength="100" required autocomplete="off">
+          <small class="field-error" id="mealNameError"></small>
+        </label>
+
+        <label class="field">
+          <span>Date <strong aria-hidden="true">*</strong></span>
+          <input id="mealDate" name="mealDate" type="date" required>
+          <small class="field-error" id="mealDateError"></small>
+        </label>
+
+        <label class="field">
+          <span>Rating</span>
+          <select id="rating" name="rating">
+            <option value="1">1 / 5</option>
+            <option value="2">2 / 5</option>
+            <option value="3" selected>3 / 5</option>
+            <option value="4">4 / 5</option>
+            <option value="5">5 / 5</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Total time (minutes)</span>
+          <input id="totalTime" name="totalTime" type="number" min="0" max="1440" step="1" inputmode="numeric" placeholder="45">
+        </label>
+
+        <label class="field">
+          <span>Mess level</span>
+          <select id="messLevel" name="messLevel">
+            <option value="1">1 — Barely any</option>
+            <option value="2">2 — Light</option>
+            <option value="3" selected>3 — Normal</option>
+            <option value="4">4 — Messy</option>
+            <option value="5">5 — Disaster zone</option>
+          </select>
+        </label>
+
+        <fieldset class="field full-width choice-group">
+          <legend>Make again?</legend>
+          <label><input type="radio" name="makeAgain" value="yes" checked> Yes</label>
+          <label><input type="radio" name="makeAgain" value="no"> No</label>
+        </fieldset>
+
+        <label class="field full-width">
+          <span>What worked</span>
+          <textarea id="whatWorked" name="whatWorked" rows="3" maxlength="1000" placeholder="Technique, seasoning, timing, sides…"></textarea>
+        </label>
+
+        <label class="field full-width">
+          <span>What did not work</span>
+          <textarea id="whatDidNotWork" name="whatDidNotWork" rows="3" maxlength="1000" placeholder="What should change next time?"></textarea>
+        </label>
+
+        <label class="field full-width">
+          <span>Notes</span>
+          <textarea id="notes" name="notes" rows="4" maxlength="2000" placeholder="Anything else worth remembering"></textarea>
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <button id="cancelButton" class="secondary-button" type="button">Cancel</button>
+        <button class="primary-button" type="submit">Save meal</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
